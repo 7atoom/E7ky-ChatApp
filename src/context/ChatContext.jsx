@@ -15,6 +15,8 @@ export const ChatContext = createContext({
   currentChat: null,
   sendTextMessage: () => {},
   onlineUsers: [],
+  notifications: [],
+  allUser: [],
 });
 
 export const ChatContextProvider = ({ children, user }) => {
@@ -30,11 +32,13 @@ export const ChatContextProvider = ({ children, user }) => {
   const [newMessage, setNewMessage] = useState(null);
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [notifications, setNotifications] = useState([]); // State for notifications
+  const [allUsers, setAllUsers] = useState([]); // State for all users
 
   console.log("Messages", messages);
   console.log("Current Chat", currentChat);
   console.log("online users", onlineUsers);
-
+  console.log("Notifications", notifications);
   // Socket connection
   useEffect(() => {
     const newSocket = io("https://chat-api-cova.onrender.com");
@@ -73,8 +77,24 @@ export const ChatContextProvider = ({ children, user }) => {
       setMessages((prev) => [...prev, res]);
     });
 
+    socket.on("getNotification", (res) => {
+      const isChatOpen = currentChat?.members.some(
+        (id) => id === res.senderId
+      );
+
+      if (isChatOpen) {
+        setNotifications((prev) => [
+          {...res, isRead: true},
+          ...prev,
+        ]);
+      } else {
+        setNotifications((prev) => [res, ...prev]);
+      }
+    });
+
     return () => {
       socket.off("getMessage");
+      socket.off("getNotification");
     };
   }, [socket, user, currentChat]);
 
@@ -123,6 +143,7 @@ export const ChatContextProvider = ({ children, user }) => {
       });
 
       setPotentialChats(pChats);
+      setAllUsers(usersArray);
     };
 
     getUserChats();
@@ -242,6 +263,8 @@ export const ChatContextProvider = ({ children, user }) => {
         currentChat,
         sendTextMessage,
         onlineUsers,
+        notifications,
+        allUsers,
       }}>
       {children}
     </ChatContext.Provider>

@@ -1,46 +1,42 @@
 import { useFetchRecipient } from "../../hooks/useFetchRecipient";
-import Stack from "react-bootstrap/Stack";
-import avatar from "../../assets/avatar.svg";
 import { useContext } from "react";
 import { ChatContext } from "../../context/ChatContext.jsx";
+import avatar from "../../assets/avatar.svg";
 
-const UserChat = ({ chat, user }) => {
+const UserChat = ({ chat, user, onClick }) => {
   const { recipientUser, error } = useFetchRecipient(chat, user);
-  const { onlineUsers } = useContext(ChatContext);
+  const { onlineUsers, notifications } = useContext(ChatContext);
 
   const isOnline = onlineUsers?.some((onlineUser) => {
     return onlineUser?.userId === recipientUser?._id;
   });
 
   if (error) {
-    return <div>Error loading user.</div>;
+    return <div className='user-card'>Error loading user.</div>;
   }
 
   if (!recipientUser) {
-    return <div>Loading...</div>;
+    return <div className='user-card'>Loading...</div>;
   }
 
   return (
-    <Stack
-      direction='horizontal'
-      gap={3}
-      className='user-card align-items-center p-2 justify-content-between'
-      role='button'>
-      <div className='d-flex'>
-        <div className='me-2'>
-          <img src={avatar} alt='user-avatar' height='35px' />
+    <div className='user-card' onClick={onClick} style={{ cursor: "pointer" }}>
+      <div className='d-flex align-items-center'>
+        <div className='avatar-container'>
+          <img src={avatar} alt='user-avatar' className='avatar' />
+          {isOnline && <span className='user-online'></span>}
         </div>
         <div className='text-content'>
           <div className='name'>{recipientUser.name}</div>
-          <div className='text'>Text Message</div>
+          <div className='text'>Click to chat</div>
         </div>
       </div>
       <div className='d-flex flex-column align-items-end'>
-        <div className='date'>25/11/2002</div>
-        <div className='this-user-notifications'>2</div>
-        <div className={isOnline ? "user-online" : ""}></div>
+        <div className='date'>Today</div>
+        {/* Uncomment if you want to show notification count */}
+        {/* <div className='this-user-notifications'>2</div> */}
       </div>
-    </Stack>
+    </div>
   );
 };
 

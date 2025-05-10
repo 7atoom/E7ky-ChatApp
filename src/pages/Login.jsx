@@ -1,51 +1,57 @@
-import { Alert, Button, Form, Row, Col, Stack } from "react-bootstrap";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext.jsx";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const { loginInfo, updateLoginInfo, loginUser, loginError, isLoginLoading } =
-    useContext(AuthContext);
+  const { loginInfo, updateLoginInfo, loginUser, loginError, isLoginLoading } = useContext(AuthContext);
 
   return (
-    <Form onSubmit={loginUser}>
-      <Row
-        style={{
-          height: "100vh",
-          justifyContent: "center",
-        }}
-        className='align-items-center'>
-        <Col xs={6}>
-          <Stack gap={3}>
-            <h2>Login</h2>
-            <Form.Control
-              type='email'
-              placeholder='Email'
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2 className="auth-title">E7ky</h2>
+          <p className="auth-subtitle">Sign in to your account</p>
+        </div>
+        <form onSubmit={loginUser} className="auth-body">
+          <div className="auth-form-group">
+            <label className="auth-label" htmlFor="email">Email</label>
+            <input
+              id="email"
+              className="auth-input"
+              type="email"
+              placeholder="name@example.com"
               value={loginInfo.email}
-              onChange={(e) =>
-                updateLoginInfo({ ...loginInfo, email: e.target.value })
-              }
+              onChange={(e) => updateLoginInfo({ ...loginInfo, email: e.target.value })}
             />
-            <Form.Control
-              type='password'
-              placeholder='Password'
+          </div>
+          <div className="auth-form-group">
+            <label className="auth-label" htmlFor="password">Password</label>
+            <input
+              id="password"
+              className="auth-input"
+              type="password"
+              placeholder="••••••••"
               value={loginInfo.password}
-              onChange={(e) =>
-                updateLoginInfo({ ...loginInfo, password: e.target.value })
-              }
+              onChange={(e) => updateLoginInfo({ ...loginInfo, password: e.target.value })}
             />
-            <Button variant='primary' type='submit'>
-              {isLoginLoading ? "Logging in..." : "Login"}
-            </Button>
-
-            {loginError?.error && (
-              <Alert variant='danger' className='mt-3'>
-                {loginError.message}
-              </Alert>
-            )}
-          </Stack>
-        </Col>
-      </Row>
-    </Form>
+          </div>
+          
+          {loginError?.error && (
+            <div className="auth-alert">{loginError.message}</div>
+          )}
+          
+          <button type="submit" className="auth-button" disabled={isLoginLoading}>
+            {isLoginLoading ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+        <div className="auth-footer">
+          Don't have an account?{" "}
+          <Link to="/register" className="auth-link">
+            Sign up
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

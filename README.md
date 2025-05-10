@@ -1,34 +1,29 @@
-# 💬 E7ky ChatApp
+# 💬 Chat App
 
-A real-time chat application built with React, React Query, Socket.io, and Express backend. E7ky ChatApp allows users to chat, see online status, and receive live notifications — all in a smooth, responsive interface.
+A real-time chat application with user authentication, private messaging, online status, and notifications.
+
+✅ **Frontend**: React + Vite  
+✅ **Backend**: Node.js + Express + Socket.io  
+✅ **API Live**: [https://chat-api-cova.onrender.com](https://chat-api-cova.onrender.com)
 
 ---
 
 ## 🚀 Features
 
-- 🔑 User authentication (signup/login)
-- 💬 1-to-1 chat between users
-- 🌐 Real-time messaging with Socket.io
-- 🔔 Live notifications for new messages
-- ✅ Online users indicator
-- 📱 Responsive UI for desktop and mobile
-- 🛡️ Error handling and loading states
+- 🔐 User signup & login  
+- 💬 One-to-one private chats  
+- 🟢 Online/offline status  
+- 🔔 Real-time notifications  
+- ⚡ Real-time updates with Socket.io
 
 ---
 
-## ⚙️ Tech Stack
+## 🛠 Installation Guide
 
-- **Frontend:** React, React Query, Bootstrap
-- **Backend:** NodeJs
-- **Real-time:** Socket.io
-- **Deployment:** Render / Swagger
+### 📦 Frontend setup
 
----
-
-## 📦 Installation
-
-1. **Clone the repository**
+1️⃣ **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/E7ky-ChatApp.git
-cd E7ky-ChatApp
+git clone https://github.com/yourusername/chat-frontend.git
+cd chat-frontend

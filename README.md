@@ -19,9 +19,9 @@ A real-time chat application built with React, React Query, Socket.io, and Expre
 ## ⚙️ Tech Stack
 
 - **Frontend:** React, React Query, Bootstrap
-- **Backend:** Express.js, MongoDB, Mongoose
+- **Backend:** NodeJs
 - **Real-time:** Socket.io
-- **Deployment:** Render / Vercel / Netlify (depending on your setup)
+- **Deployment:** Render / Swagger
 
 ---
 

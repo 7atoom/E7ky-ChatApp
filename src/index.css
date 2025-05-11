@@ -47,6 +47,23 @@ body {
   margin-bottom: 1rem;
 }
 
+/* Empty potential users styling */
+.empty-potential-users {
+  width: 100%;
+  background: rgba(155, 135, 245, 0.1);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.empty-potential-users p {
+  margin: 0;
+}
+
+/* Single user */
 .single-user {
   background: var(--primary);
   color: white;
@@ -524,6 +541,53 @@ body {
   .message {
     max-width: 80%;
   }
+  
+  .user-card .text-content {
+    width: 140px;
+  }
+  
+  .auth-card {
+    margin: 0 1rem;
+  }
+  
+  .all-users {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .all-users::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .user-card .text-content {
+    width: 120px;
+  }
+  
+  .chat-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .messages {
+    padding: 1rem;
+  }
+  
+  .chat-input {
+    padding: 0.75rem 1rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .auth-title {
+    font-size: 1.75rem;
+  }
 }
 
 /* Bootstrap navbar overrides */
@@ -567,8 +631,28 @@ body {
   font-weight: 500;
 }
 
+.navbar-toggler {
+  border-color: var(--border-color) !important;
+  padding: 0.375rem 0.5rem;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
 /* Chat container fix for full height */
 .chat-container {
   height: calc(100vh - 3.75rem);
   overflow: hidden;
+}
+
+@media (max-width: 992px) {
+  .navbar-collapse {
+    background: var(--header-background);
+    padding: 0.5rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    margin-top: 0.25rem;
+  }
 }

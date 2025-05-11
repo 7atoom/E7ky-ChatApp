@@ -68,7 +68,7 @@ export const ChatContextProvider = ({ children, user }) => {
     socket.emit("sendMessage", { ...newMessage, recipientId });
   }, [newMessage, socket, currentChat, user]);
 
-  // recieve Message
+  // recieve Message and Notification
   useEffect(() => {
     if (!socket) return;
 
@@ -78,15 +78,10 @@ export const ChatContextProvider = ({ children, user }) => {
     });
 
     socket.on("getNotification", (res) => {
-      const isChatOpen = currentChat?.members.some(
-        (id) => id === res.senderId
-      );
+      const isChatOpen = currentChat?.members.some((id) => id === res.senderId);
 
       if (isChatOpen) {
-        setNotifications((prev) => [
-          {...res, isRead: true},
-          ...prev,
-        ]);
+        setNotifications((prev) => [{ ...res, isRead: true }, ...prev]);
       } else {
         setNotifications((prev) => [res, ...prev]);
       }
@@ -99,24 +94,7 @@ export const ChatContextProvider = ({ children, user }) => {
   }, [socket, user, currentChat]);
 
   useEffect(() => {
-    const getUserChats = async () => {
-      if (user?._id) {
-        setIsUserChatsLoading(true);
-        setUserChatsError(null);
-
-        const response = await getRequest(`${baseUrl}/chats/${user?._id}`);
-        setIsUserChatsLoading(false);
-        if (response.error) {
-          return setUserChatsError(response);
-        }
-        setUserChats(response.chats);
-
-        // Call getUsers after userChats is updated
-        getUsers(response.chats);
-      }
-    };
-
-    const getUsers = async (updatedChats) => {
+    const getUsers = async () => {
       const response = await getRequest(`${baseUrl}/users`);
       if (response.error) {
         return console.log("error fetching users", response);
@@ -133,8 +111,8 @@ export const ChatContextProvider = ({ children, user }) => {
           return false;
         }
 
-        if (updatedChats) {
-          isChatCreated = updatedChats.some((chat) => {
+        if (userChats) {
+          isChatCreated = userChats.some((chat) => {
             return chat.members[0] === u._id || chat.members[1] === u._id;
           });
         }
@@ -146,6 +124,23 @@ export const ChatContextProvider = ({ children, user }) => {
       setAllUsers(usersArray);
     };
 
+    getUsers();
+  }, [user, userChats]);
+
+  useEffect(() => {
+    const getUserChats = async () => {
+      if (user?._id) {
+        setIsUserChatsLoading(true);
+        setUserChatsError(null);
+
+        const response = await getRequest(`${baseUrl}/chats/${user?._id}`);
+        setIsUserChatsLoading(false);
+        if (response.error) {
+          return setUserChatsError(response);
+        }
+        setUserChats(response.chats);
+      }
+    };
     getUserChats();
   }, [user]);
 

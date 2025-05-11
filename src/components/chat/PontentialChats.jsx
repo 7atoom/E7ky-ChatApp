@@ -8,12 +8,12 @@ const PotentialChats = () => {
 
   return (
     <>
-      <div className="all-users">
-        {pontentialChats &&
+      <div className='all-users'>
+        {pontentialChats && pontentialChats.length > 0 ? (
           pontentialChats.map((u, index) => {
             return (
               <div
-                className="single-user"
+                className='single-user'
                 key={index}
                 onClick={() => createChat(user._id, u._id)}>
                 {u?.name}
@@ -25,7 +25,12 @@ const PotentialChats = () => {
                   }></span>
               </div>
             );
-          })}
+          })
+        ) : (
+          <div className='empty-potential-users'>
+            <p>No potential chats available</p>
+          </div>
+        )}
       </div>
     </>
   );

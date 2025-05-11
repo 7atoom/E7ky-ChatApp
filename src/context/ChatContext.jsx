@@ -243,6 +243,11 @@ export const ChatContextProvider = ({ children, user }) => {
     [userChats]
   );
 
+  useEffect(() => {
+  // Reset currentChat when the user logs in, registers, or changes
+  setCurrentChat(null);
+}, [user]);
+
   return (
     <ChatContext.Provider
       value={{
